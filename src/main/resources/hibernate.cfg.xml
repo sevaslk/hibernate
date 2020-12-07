@@ -9,8 +9,8 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping resource="com/myhibernate/model/Skill.hbm.xml"/>
-        <mapping resource="com/myhibernate/model/Developer.hbm.xml"/>
+        <mapping class="com.myhibernate.model.Skill"/>
+        <mapping class="com.myhibernate.model.Developer"/>
 
     </session-factory>
 </hibernate-configuration>
