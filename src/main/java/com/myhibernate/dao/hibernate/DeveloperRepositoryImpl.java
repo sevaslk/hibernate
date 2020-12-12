@@ -1,42 +1,46 @@
-package com.myhibernate.dao.daoimpl;
+package com.myhibernate.dao.hibernate;
 
-import com.myhibernate.dao.DeveloperDAO;
+import com.myhibernate.dao.DeveloperRepository;
 import com.myhibernate.model.Developer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.Query;
 import java.util.List;
 
-public class DeveloperDAOImpl implements DeveloperDAO {
+public class DeveloperRepositoryImpl implements DeveloperRepository {
     private final SessionFactory sessionFactory;
 
-    public DeveloperDAOImpl(SessionFactory sessionFactory) {
+    public DeveloperRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public void create(Developer developer) {
+    public Developer create(Developer developer) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(developer);
+            Developer savedDeveloper = (Developer) session.save(developer);
             session.getTransaction().commit();
+            return savedDeveloper;
         }
     }
 
     @Override
-    public Developer read(Long ID) {
+    public Developer read(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            Developer resultDeveloper = session.get(Developer.class, ID);
-            return resultDeveloper != null ? resultDeveloper : new Developer();
+            Query query = session.createQuery("FROM Developer d LEFT JOIN FETCH d.skills WHERE d.id = :id");
+            query.setParameter("id", id);
+            return (Developer) query.getSingleResult();
         }
     }
 
     @Override
-    public void update(Developer developer) {
+    public Developer update(Developer developer) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.update(developer);
             session.getTransaction().commit();
+            return developer;
         }
     }
 
@@ -49,10 +53,10 @@ public class DeveloperDAOImpl implements DeveloperDAO {
         }
     }
 
-    public List<Developer> readAll() {
+    public List<Developer> findAll() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            return session.createSQLQuery("SELECT name FROM developer").list();
+            return session.createQuery("FROM Developer").getResultList();
         }
     }
 

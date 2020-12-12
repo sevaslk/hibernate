@@ -11,6 +11,7 @@
 
         <mapping class="com.myhibernate.model.Skill"/>
         <mapping class="com.myhibernate.model.Developer"/>
+        <mapping class="com.myhibernate.model.Account"/>
 
     </session-factory>
 </hibernate-configuration>
