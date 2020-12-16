@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class DeveloperRepositoryImpl implements DeveloperRepository {
@@ -53,6 +54,7 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
         }
     }
 
+    @Transactional()
     public List<Developer> findAll() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

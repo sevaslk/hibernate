@@ -2,9 +2,7 @@ package com.myhibernate;
 
 import com.myhibernate.dao.GenericRepository;
 import com.myhibernate.dao.hibernate.DeveloperRepositoryImpl;
-import com.myhibernate.dao.hibernate.SkillRepositoryImpl;
 import com.myhibernate.model.Developer;
-import com.myhibernate.model.Skill;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
