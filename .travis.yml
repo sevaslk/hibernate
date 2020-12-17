@@ -2,7 +2,7 @@ language: java
 before_script:
   - echo "Starting build"
 script:
-  - mvn clean test
+  - mvn clean install
 after_script:
   - echo "Script finished"
 after_success:
